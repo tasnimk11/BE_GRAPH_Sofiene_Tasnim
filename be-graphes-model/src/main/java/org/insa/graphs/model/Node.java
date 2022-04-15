@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 /**
  * <p>
  * Class representing a Node in a {@link Graph}.
@@ -19,7 +20,7 @@ import java.util.List;
  * </p>
  *
  */
-public final class Node implements Comparable<Node> {
+public final class Node implements Comparable<Node>{
 
     /**
      * <p>
