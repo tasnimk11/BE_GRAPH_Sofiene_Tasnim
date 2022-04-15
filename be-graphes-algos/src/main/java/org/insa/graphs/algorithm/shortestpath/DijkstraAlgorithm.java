@@ -49,8 +49,12 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         boolean found = false;
         Label x, y ;
         while (!tas.isEmpty() && !found) {
+        	
+        	
+        	
         	x = tas.deleteMin(); // Extract minimum
         	x.setMark(true);   //Mark current 
+        	
         	
         	//check if this node is the destination
         	found = x.getNode() == data.getDestination();
@@ -65,17 +69,23 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         			y = new Label(arc.getDestination());
         			labels[arc.getDestination().getId()] = y;
         		} 
+       
         		
         		//check if not marked
-        		if(! y.getMark()) {
+        		if(! y.getMark() ) {
+        			
         			float Wxy = arc.getLength();
         			if (y.getCost() > (x.getCost()+ Wxy)) {
-        				y.setCost(x.getCost()+ Wxy);
-        				y.setFather(x.getNode());
-        				if (y.getInHeap()) {        					
+        				
+        				if (y.getInHeap()) {   
         					tas.remove(y);
+        					y.setCost(x.getCost()+ Wxy);
+            				y.setFather(x.getNode());
         					tas.insert(y);
+        					
         				} else {
+        					y.setCost(x.getCost()+ Wxy);
+            				y.setFather(x.getNode());
         					y.setInHeap();
         					tas.insert(y);
         				}
@@ -86,7 +96,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	}
         	
         	
+        	
         }
+
         
         // Destination has no predecessor, the solution is infeasible...
         if (predecessorArcs[data.getDestination().getId()] == null) {
