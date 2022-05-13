@@ -22,7 +22,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     	
         final ShortestPathData data = getInputData();     
         Graph graph = data.getGraph();
-        final int nbNodes = graph.size();
+        final int nbNodes = graph.size(); 
+        
         
         ShortestPathSolution solution = null;
         
@@ -61,6 +62,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	
         	//Get successors of current node
         	for (Arc arc: x.getNode().getSuccessors()) {
+        		// Small test to check allowed roads...
+                if (!data.isAllowed(arc)) {
+                    continue;
+                }
+        		
         		y = labels[arc.getDestination().getId()];
         		
         		//if label still does not exist
