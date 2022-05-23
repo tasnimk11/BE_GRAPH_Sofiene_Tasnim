@@ -1,11 +1,12 @@
 package org.insa.graphs.algorithm.utils;
 import org.insa.graphs.model.Node;
+import org.insa.graphs.model.Arc;
 
 public class Label implements Comparable<Label>{
 	protected Node node; 
 	protected boolean mark;      //marque cout minimum trouvé
 	protected Double cost;       // valeur courante du plus court chemin trouvé
-	protected Node father;       //sommet precédent donnant le plus court chemin vers ce sommet
+	protected Arc father;       //sommet precédent donnant le plus court chemin vers ce sommet
 	protected boolean inHeap;
 	
 	
@@ -26,7 +27,10 @@ public class Label implements Comparable<Label>{
 	public Double getCost() { 
 		return this.cost;
 	}
-	public Node getFather() { 
+	public Double getTotalCost() { 
+		return this.cost;
+	}
+	public Arc getFather() { 
 		return this.father;
 	}
 	public boolean getInHeap() { 
@@ -43,7 +47,7 @@ public class Label implements Comparable<Label>{
 	public void setCost(Double cost) { 
 		this.cost = cost;
 	}
-	public void setFather(Node father) { 
+	public void setFather(Arc father) { 
 		this.father = father;
 	}
 	public void setInHeap() { 
@@ -53,12 +57,20 @@ public class Label implements Comparable<Label>{
 	@Override
 	public int compareTo(Label other) {
 		
-		if(this.getCost() < other.getCost()) {
+		if(this.getTotalCost() < other.getTotalCost()) {
 			return -1;
-		} else if(this.getCost() == other.getCost()) {
-			return 0;
-		} else {
-			return 1;
+		} else  { 
+			if(this.getTotalCost() > other.getTotalCost()) {
+				return 1;
+			}else {	//this.getTotalCost() == other.getTotalCost()
+				if (this.getTotalCost()-this.getCost()<other.getTotalCost()-other.getCost()) {
+					return -1;
+				} else if (this.getTotalCost()-this.getCost()>other.getTotalCost()-other.getCost()) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
 		}
 		
 	}

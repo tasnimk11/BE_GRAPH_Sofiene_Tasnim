@@ -21,7 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class DijkstraTest {
+public class AStarAlgorithmTest {
 	
 	// Small graph used for tests
     private static Graph graph;
@@ -89,27 +89,32 @@ public class DijkstraTest {
 	    			//check if origin==dest
 	    			ArcInspector inspecteur=new ArcInspectorFactory().getAllFilters().get(0);
 					ShortestPathData data = new ShortestPathData(graph, nodes[origin] ,nodes[dest], inspecteur);
-					DijkstraAlgorithm sd= new DijkstraAlgorithm(data); 
+					DijkstraAlgorithm se= new DijkstraAlgorithm(data); 
+					AStarAlgorithm sd= new AStarAlgorithm(data); 
 					BellmanFordAlgorithm sb = new BellmanFordAlgorithm(data);  
 					
-					ShortestPathSolution strouve = sd.run();  
+					
+					
+					ShortestPathSolution sattendu2 = se.run();
+					ShortestPathSolution strouve = sd.run();
 					ShortestPathSolution sattendu = sb.run(); 
+					   
 					
 					
 	    			if(nodes[origin] == nodes[dest]) {
 	    				System.out.println("Origin == Destination ");  
 	    				assertEquals(strouve.getPath().getLength(),0,0);
 	    			} else { 
-	 
-	    				// si la solution dijkstra n'existe pas
+	    				
+	    				
+	    				// si la solution n'existe pas
 	    				if (strouve.getPath()==null) { 
 	    					assertEquals(strouve.getPath(), sattendu.getPath()); 
 	    				}else { 
 	    					float lengthTrouve=strouve.getPath().getLength();  
 	    					float lengthAttendu=sattendu.getPath().getLength();  
 	    					assertEquals(lengthTrouve, lengthAttendu,0); 
-	    					//System.out.println("Le dijkstra donne " +lengthTrouve + "alors que le bellman ford " + lengthAttendu); 
-	
+	    					
 	    				}    				
 	    			}	
     			}
@@ -127,7 +132,7 @@ public class DijkstraTest {
 		//Create Path
 		ArcInspector inspecteur=new ArcInspectorFactory().getAllFilters().get(0);
 		ShortestPathData data = new ShortestPathData(graph, nodes[origin] ,nodes[dest], inspecteur);
-		DijkstraAlgorithm solD= new DijkstraAlgorithm(data); 
+		AStarAlgorithm solD= new AStarAlgorithm(data); 
 		ShortestPathSolution strouve = solD.run(); 
 		
 		assertNull(strouve.getPath());
@@ -141,7 +146,7 @@ public class DijkstraTest {
 		//Create Path
 		ArcInspector inspecteur=new ArcInspectorFactory().getAllFilters().get(0);
 		ShortestPathData data = new ShortestPathData(graphMap,graphMap.getNodes().get(origin) ,graphMap.getNodes().get(dest), inspecteur);
-		DijkstraAlgorithm solD= new DijkstraAlgorithm(data); 
+		AStarAlgorithm solD= new AStarAlgorithm(data); 
 		ShortestPathSolution strouve = solD.run(); 
 		
 		assertNull(strouve.getPath());
