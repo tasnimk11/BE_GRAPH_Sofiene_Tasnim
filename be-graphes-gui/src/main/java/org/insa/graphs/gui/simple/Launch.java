@@ -68,10 +68,10 @@ public class Launch {
         final Graph graph = reader.read();
 
         // Create the drawing:
-        final Drawing drawing = createDrawing();
+        //final Drawing drawing = createDrawing();
 
         // TODO: Draw the graph on the drawing.
-        drawing.drawGraph(graph);
+        /*drawing.drawGraph(graph);
         
         // TODO: Create a PathReader.
         final PathReader pathReader = new BinaryPathReader(
@@ -80,12 +80,14 @@ public class Launch {
         final Path path = pathReader.readPath(graph);
 
         // TODO: Draw the path.
-        drawing.drawPath(path);
+        drawing.drawPath(path); */
         
-        
+       
         //Test ASTAR
         java.util.List<Node> nodes = graph.getNodes();
-        boolean test = true;
+        boolean test = true; 
+        
+        int type=1; // 0 if time and 1 if length
         for (int origin=0; origin< nodes.size(); origin++) {
 	        for(int dest=0 ; dest<nodes.size(); dest++) {
 				if(nodes.get(origin) != nodes.get(dest)) {
@@ -96,31 +98,37 @@ public class Launch {
 					AStarAlgorithm sDA= new AStarAlgorithm(data); 
 					BellmanFordAlgorithm sB = new BellmanFordAlgorithm(data);  
 					
-					ShortestPathSolution sattenduD = sD.run();
+					
 					ShortestPathSolution strouveDA = sDA.run();
 					ShortestPathSolution sattenduB = sB.run(); 
 					
-					if(nodes.get(origin) == nodes.get(dest)) {
+					if((strouveDA.getPath()==null) && (sattenduB.getPath()==null)) {
 	    				//System.out.println("Origin == Destination ");   			
-	    				test = test && strouveDA.getPath().getLength()<=0.1;
-					} else { 				
+	    				test = true;
+					} else { 	 
+						test=false;
     					// si la solution n'existe pas
-	    				if (strouveDA.getPath()==null) { 
+	    				 
 	    					//System.out.println("Trouve : strouveDA null"); 
-	    				} else { 
-	    					float lengthTrouve=strouveDA.getPath().getLength();  
-	    					float lengthAttendu=sattenduD.getPath().getLength();
-	    					float delta = lengthTrouve-lengthAttendu;
-	    					
-	    					test = test && (int)delta==0;
-	    				}
+	    				}   
+					if ((strouveDA.getPath()!=null) && (sattenduB.getPath()!=null)) { 
+					System.out.println("Path non nul :");
+					if (type==0) { 
+						if (Double.compare(strouveDA.getPath().getMinimumTravelTime(),sattenduB.getPath().getMinimumTravelTime())==0) 
+						{test=true;	} else {test=false;	}
+					} 
+					else {
+						if(Float.compare(strouveDA.getPath().getLength(),sattenduB.getPath().getLength())==0)  
+								{test=true;	} else {test=false;	}
 					}
-				}
+					}
+				} 
+	        System.out.println("Résultat test:"+test);
 	        }
         
-        }
-        System.out.println("test ShortestPathSolution : "+test);
+        
+        
         
 
- }
-}
+ }}}
+

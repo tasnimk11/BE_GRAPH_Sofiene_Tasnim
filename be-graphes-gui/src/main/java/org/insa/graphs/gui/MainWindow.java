@@ -823,11 +823,15 @@ public class MainWindow extends JFrame {
         threadTimer = new Timer(THREAD_TIMER_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                long seconds = currentThread.getDuration().getSeconds();
+                long seconds = currentThread.getDuration().getSeconds(); 
+                
                 threadTimerLabel.setText(String.format("%02d:%02d:%02d", seconds / 3600,
-                        seconds / 60 % 60, seconds % 60));
+                        seconds / 60 % 60, seconds % 60)); 
+               
             }
-        });
+        } ); 
+        
+        
         threadTimer.setInitialDelay(0);
 
         threadPanel = new JPanel();

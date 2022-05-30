@@ -125,12 +125,12 @@ public class AStarAlgorithmTest {
     
     
     @Test 
-    public void TestNullPath(){
+    public static void TestNullPath(){
     	//Fix origin = destination 
-		int origin = 3;
-		int dest   = 3;
+		int origin = 48311;
+		int dest   = 48311;
 		//Create Path
-		ArcInspector inspecteur=new ArcInspectorFactory().getAllFilters().get(0);
+		ArcInspector inspecteur=ArcInspectorFactory.getAllFilters().get(0);
 		ShortestPathData data = new ShortestPathData(graph, nodes[origin] ,nodes[dest], inspecteur);
 		AStarAlgorithm solD= new AStarAlgorithm(data); 
 		ShortestPathSolution strouve = solD.run(); 
@@ -139,7 +139,7 @@ public class AStarAlgorithmTest {
 	 }
     
     @Test
-    public void TestNonConnexPath() {
+    public static void TestNonConnexPath() {
     	//Fix origin and destination, each on different side of the land
 		int origin = 265352;
 		int dest   = 48311;
